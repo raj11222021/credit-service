@@ -16,4 +16,8 @@ node {
     sh 'mvn test' 
   }
   
+  stage('Code Quality Analysis'){
+    
+  }
+  
 }
