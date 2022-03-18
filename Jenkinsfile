@@ -20,7 +20,7 @@ node {
     
     withSonarQubeEnv('mysonar') 
 	    	{
-                 sh 'mvn sonar:sonar -Dsonar.organization=myorg11222021'
+                 sh 'mvn sonar:sonar -Dsonar.organization=myorg11222021 -Dsonar.projectKey=rd-credit-service'
 		
     		}
   }
