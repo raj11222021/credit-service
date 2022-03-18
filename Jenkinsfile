@@ -18,6 +18,11 @@ node {
   
   stage('Code Quality Analysis'){
     
+    withSonarQubeEnv('mysonar') 
+	    	{
+                 sh 'mvn sonar:sonar -Dsonar.organization=myorg11222021'
+		
+    		}
   }
   
 }
