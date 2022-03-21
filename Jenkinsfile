@@ -1,8 +1,13 @@
+podTemplate(cloud: 'kubernetes',label: 'kubernetes',
+            containers: [
+                    containerTemplate(name: 'podman', image: 'quay.io/containers/podman', privileged: true, command: 'cat', ttyEnabled: true)
+					
+            ]) 
+{
 node {
   
    def MAVEN_HOME = tool "mymaven"
-   env.PATH = "${env.PATH}:${MAVEN_HOME}/bin"
-  
+   env.PATH = "${env.PATH}:${MAVEN_HOME}/bin" 
   
   stage('checkout') {
     checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/raj11222021/credit-service.git']]])    
@@ -24,5 +29,15 @@ node {
 		
     		}
   }
+}
+	
+node('kubernetes'){
+   container('podman') {
+	stage('Image Build'){
+	   sh 'podman image build -t credit-service .'	
+		
+	}
+   }
+}
   
 }
