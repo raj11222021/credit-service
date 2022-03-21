@@ -25,15 +25,16 @@ node {
     
     withSonarQubeEnv('mysonar') 
 	    	{
-                 sh 'mvn sonar:sonar -Dsonar.organization=myorg11222021 -Dsonar.projectKey=rd-credit-service'
-		
+                 sh 'mvn sonar:sonar -Dsonar.organization=myorg11222021 -Dsonar.projectKey=rd-credit-service'		
     		}
+	stash includes: '*', name: 'myproject'
   }
 }
 	
 node('kubernetes'){
    container('podman') {
 	stage('Image Build'){
+	   unstash 'myproject'
 	   sh 'podman image build -t credit-service .'	
 		
 	}
