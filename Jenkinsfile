@@ -36,8 +36,12 @@ node('kubernetes'){
 	stage('Image Build'){
 	   unstash 'myproject'
 	   sh 'podman image build -t credit-service .'	
-		
-	}
+	    withCredentials([usernamePassword(credentialsId: 'dockerid', passwordVariable: 'PWDD', usernameVariable: 'USER')]) {
+           			 sh 'docker login -u=$USER -p=$PWDD'
+			
+			
+		}
+		sh 'docker push raj11222021/creditservice:${TIME}'
    }
 }
   
